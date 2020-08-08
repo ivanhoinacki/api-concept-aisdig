@@ -1,6 +1,5 @@
 import cors from 'cors';
 
-import './bootstrap';
 import models from '../src/app/models';
 import express from 'express';
 import routes from './routes';

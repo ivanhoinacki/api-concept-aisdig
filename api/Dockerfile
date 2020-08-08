@@ -17,13 +17,7 @@ RUN npm install --no-optional && npm cache clean --force
 ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
 # Get all the code needed to run the app
-# Get all the code needed to run the app
-COPY server.js /usr/src/app
-COPY .env /usr/src/app
-COPY .eslintrc.js /usr/src/app
-COPY .sequelizerc /usr/src/app
-COPY nodemon.json /usr/src/app
-COPY app /usr/src/app/app
+COPY . /usr/src/app
 
 EXPOSE 9000
 

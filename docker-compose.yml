@@ -1,6 +1,23 @@
-version: "3"
+version: '3'
 
 services:
+  node-api-1:
+    build: ./api
+    container_name: server-api-1
+    restart: always
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      PORT: ${PORT}
+      PG_USER: ${PG_USER}
+      PG_PASSWORD: ${PG_PASSWORD}
+      PG_DATABASE: ${PG_DATABASE}
+      PG_HOST: postgres_db
+      PG_PORT: ${PG_PORT}
+    depends_on:
+      - postgres_db  
+    networks:
+      - production-network
 
   postgres_db:
     image: postgres:10.4
@@ -9,13 +26,13 @@ services:
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASSWORD}
-      POSTGRES_DB: ${PG_DB}
+      POSTGRES_DB: ${PG_DATABASE}
     volumes:
       - ${PG_DATA_DIR}:/var/lib/postgresql/data
     ports:
       - ${PG_PORT}:${PG_PORT}
     networks:
-      - production-network    
+      - production-network
 
 networks:
   production-network:
