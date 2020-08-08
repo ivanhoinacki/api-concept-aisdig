@@ -5,6 +5,7 @@ module.exports = {
     database: process.env.PG_DATABASE,
     port: process.env.PG_PORT,
     dialect: 'postgres',
+    logging: false,
     define: {
       timestamps: true,
       underscored: true,
@@ -17,6 +18,7 @@ module.exports = {
     database: process.env.PG_DATABASE,
     port: process.env.PG_PORT,
     dialect: 'postgres',
+    logging: false,
     define: {
       timestamps: true,
       underscored: true,
@@ -29,6 +31,7 @@ module.exports = {
     database: process.env.PG_DATABASE,
     port: process.env.PG_PORT,
     dialect: 'postgres',
+    logging: false,
     define: {
       timestamps: true,
       freezeTableName: true,
