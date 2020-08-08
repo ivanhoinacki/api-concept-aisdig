@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Movies.hasMany(models.TranslateMovie, {
+        foreignKey: 'movieId',
+        as: 'translate',
+      });
     }
   }
   Movies.init(
@@ -22,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       backdrop_path: DataTypes.STRING,
       original_language: DataTypes.STRING,
       original_title: DataTypes.STRING,
-      genre_ids: DataTypes.STRING,
+      genre_ids: DataTypes.JSONB,
       title: DataTypes.STRING,
       vote_average: DataTypes.DECIMAL,
-      overview: DataTypes.STRING,
+      overview: DataTypes.TEXT,
       release_date: DataTypes.DATE,
     },
     {

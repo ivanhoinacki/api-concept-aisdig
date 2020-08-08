@@ -1,5 +1,6 @@
 import cors from 'cors';
 
+import { initSeaders } from '../src/database/seeds';
 import models from '../src/app/models';
 import express from 'express';
 import routes from './routes';
@@ -27,6 +28,7 @@ class App {
         console.log(
           `db-postgres listening at http://[${success.options.host}]:${success.options.port}`
         );
+        initSeaders();
       })
       .catch((error) => {
         console.error(error);
