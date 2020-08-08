@@ -1,0 +1,19 @@
+{
+  "name": "api-concept-aisdig",
+  "version": "1.0.0",
+  "description": "Concept integration API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanhoinacki/api-concept-aisdig.git"
+  },
+  "author": "ivanhoinacki (ivanhweb@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanhoinacki/api-concept-aisdig/issues"
+  },
+  "homepage": "https://github.com/ivanhoinacki/api-concept-aisdig#readme"
+}
