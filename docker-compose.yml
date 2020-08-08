@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  postgres_db:
+    image: postgres:10.4
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB}
+    volumes:
+      - ${PG_DATA_DIR}:/var/lib/postgresql/data
+    ports:
+      - ${PG_PORT}:${PG_PORT}
+    networks:
+      - production-network    
+
+networks:
+  production-network:
+    driver: bridge
