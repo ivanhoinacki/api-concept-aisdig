@@ -1,5 +1,5 @@
 __tests__/coverage
 node_modules/
 yarn-error.log
-.env.development
+.env
 

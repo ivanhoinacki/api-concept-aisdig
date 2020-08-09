@@ -10,7 +10,7 @@ const createMovies = async () => {
   try {
     let movieList = await getMovies();
     if (movieList.results.length <= 0) console.log('movies not found.');
-    console.info(`Movies found => ${movieList.results.length}`);
+    console.log(`Movies found => ${movieList.results.length}`);
     for (const key in movieList.results) {
       if (movieList.results.hasOwnProperty(key)) {
         let e = movieList.results[key];
