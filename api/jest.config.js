@@ -3,10 +3,10 @@
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically
-  automock: false,
+  // automock: false,
 
   // Stop running tests after `n` failures
-  bail: 1,
+  // bail: 0,
 
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/kb/0w19w1gs3fsbhh66yjvwm4dm0000gn/T/jest_dx",
@@ -15,13 +15,13 @@ module.exports = {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
+  // collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['app/src/**/*.test.js'],
+  // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: '__tests__/coverage',
+  coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -29,13 +29,15 @@ module.exports = {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  // coverageProvider: "babel",
+  coverageProvider: "v8",
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: [
-    "text",
-    "lcov",
-  ],
+  // coverageReporters: [
+  //   "json",
+  //   "text",
+  //   "lcov",
+  //   "clover"
+  // ],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -124,7 +126,10 @@ module.exports = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ["<rootDir>/__tests__/setup.js"],
+  // setupFilesAfterEnv: [],
+
+  // The number of seconds after which a test is considered as slow and reported as such in the results.
+  // slowTestThreshold: 5,
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
@@ -139,7 +144,10 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ["**/__tests__/**/*.test.js?(x)"],
+  // testMatch: [
+  //   "**/__tests__/**/*.[jt]s?(x)",
+  //   "**/?(*.)+(spec|test).[tj]s?(x)"
+  // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -162,20 +170,18 @@ module.exports = {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  transform: {
-    '.(js|jsx|ts|tsx)': '@sucrase/jest-plugin',
-  },
+  // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: [
-    "<rootDir>/node_modules/"
-  ],
+  // transformIgnorePatterns: [
+  //   "/node_modules/"
+  // ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 
   // Indicates whether each individual test should be reported during the run
-  verbose: false,
+  // verbose: undefined,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],
