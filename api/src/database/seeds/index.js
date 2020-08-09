@@ -9,23 +9,24 @@ exports.initSeaders = async () => {
 const createMovies = async () => {
   try {
     let movieList = await getMovies();
+    if (movieList.results.length <= 0) console.log('movies not found.');
 
-    if (movieList.results.length > 0) {
-      for (const key in movieList.results) {
-        if (movieList.results.hasOwnProperty(key)) {
-          const e = movieList.results[key];
-          e.id_movie = e.id;
-          e.createdAt = new Date();
-          e.updatedAt = new Date();
+    for (const key in movieList.results) {
+      if (movieList.results.hasOwnProperty(key)) {
+        let e = movieList.results[key];
+        e.id_movie = e.id;
+        e.createdAt = new Date();
+        e.updatedAt = new Date();
 
-          let movie = await Movies.findOne({ where: { id_movie: e.id } });
-          if (!movie) {
-            movie = await Movies.create(e);
-          }
-
-          let trasnlateList = await getTranslate(movie);
-          await mountTranslate(trasnlateList, movie);
+        const movie = await Movies.findOne({ where: { id_movie: e.id } });
+        if (!movie) {
+          movie = await Movies.create(e);
         }
+
+        const trasnlateList = await getTranslate(
+          movie.getDataValue('id_movie')
+        );
+        await mountTranslate(trasnlateList, movie);
       }
     }
   } catch (error) {
@@ -39,22 +40,19 @@ const mountTranslate = (trasnlateList, movie) => {
       let translateMovie;
       for (const key in trasnlateList.translations) {
         if (trasnlateList.translations.hasOwnProperty(key)) {
-          const e = trasnlateList.translations[key];
-          console.log(e)
-          /**
-           * include id movie
-           */
-          e.movieId = movie.id;
+
+          let e = trasnlateList.translations[key];
+          e.movieId = movie.getDataValue('id');
           e.createdAt = new Date();
           e.updatedAt = new Date();
 
           translateMovie = await TranslateMovie.findOne({
             where: {
-              movieId: movie.id_movie,
+              movieId: movie.getDataValue('id_movie'),
               english_name: e.english_name,
             },
           });
-          console.log(translateMovie)
+
           if (!translateMovie) {
             translateMovie = await TranslateMovie.create(e);
           }
@@ -81,11 +79,11 @@ const getMovies = () => {
   });
 };
 
-const getTranslate = (movie) => {
+const getTranslate = (id_movie) => {
   return new Promise((resolve, reject) => {
     var options = {
       method: 'GET',
-      url: `https://api.themoviedb.org/3/movie/${movie.id_movie}/translations?api_key=${process.env.API_KEY}`,
+      url: `https://api.themoviedb.org/3/movie/${id_movie}/translations?api_key=${process.env.API_KEY}`,
     };
 
     request(options, async (error, response) => {
