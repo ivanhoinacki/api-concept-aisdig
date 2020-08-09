@@ -2,38 +2,43 @@
 import request from 'request';
 import { Movies, TranslateMovie } from '../../app/models';
 
-exports.initSeaders = async () => {
-  createMovies();
-};
+exports.initSeaders = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let movieList = await getMovies();
+      if (movieList.results.length <= 0) console.log('movies not found.');
+      console.log(`Movies found => ${movieList.results.length}`);
+      for (const key in movieList.results) {
+        if (movieList.results.hasOwnProperty(key)) {
+          let e = movieList.results[key];
+          e.id_movie = e.id;
+          e.createdAt = new Date();
+          e.updatedAt = new Date();
 
-const createMovies = async () => {
-  try {
-    let movieList = await getMovies();
-    if (movieList.results.length <= 0) console.log('movies not found.');
-    console.log(`Movies found => ${movieList.results.length}`);
-    for (const key in movieList.results) {
-      if (movieList.results.hasOwnProperty(key)) {
-        let e = movieList.results[key];
-        e.id_movie = e.id;
-        e.createdAt = new Date();
-        e.updatedAt = new Date();
+          let movie = await Movies.findOne({ where: { id_movie: e.id } });
+          if (!movie) {
+            movie = await Movies.create(e);
+            console.log(
+              `Movie create => ${movie.getDataValue('original_title')}`
+            );
+          }
 
-        let movie = await Movies.findOne({ where: { id_movie: e.id } });
-        if (!movie) {
-          movie = await Movies.create(e);
-          console.log(`Movie create => ${movie.getDataValue('original_title')}`);
+          const trasnlateList = await getTranslate(
+            movie.getDataValue('id_movie')
+          );
+          console.log(
+            `Translations found => ${
+              trasnlateList.translations.length
+            } for movie ${movie.getDataValue('original_title')}`
+          );
+          await mountTranslate(trasnlateList, movie);
         }
-
-        const trasnlateList = await getTranslate(
-          movie.getDataValue('id_movie')
-        );
-        console.log(`Translations found => ${trasnlateList.translations.length} for movie ${movie.getDataValue('original_title')}`);
-        await mountTranslate(trasnlateList, movie);
       }
+      return resolve({ msg: 'successful integration' });
+    } catch (error) {
+      return reject({ msg: error });
     }
-  } catch (error) {
-    console.log(error);
-  }
+  });
 };
 
 const mountTranslate = (trasnlateList, movie) => {
@@ -56,7 +61,11 @@ const mountTranslate = (trasnlateList, movie) => {
 
           if (!translateMovie) {
             translateMovie = await TranslateMovie.create(e);
-            console.log(`Subtitles language create => ${translateMovie.getDataValue('english_name')} for movie ${movie.getDataValue('original_title')}`);
+            console.log(
+              `Subtitles language create => ${translateMovie.getDataValue(
+                'english_name'
+              )} for movie ${movie.getDataValue('original_title')}`
+            );
           }
         }
       }

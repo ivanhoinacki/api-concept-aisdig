@@ -24,11 +24,16 @@ class App {
   initServer = async () => {
     models.sequelize
       .sync()
-      .then((success) => {
+      .then(async (success) => {
         console.log(
           `db-postgres listening at http://[${success.options.host}]:${success.options.port}`
         );
-        initSeaders();
+        try {
+          let intgration = await initSeaders();
+          console.log(intgration.msg);
+        } catch (error) {
+          console.log(error);
+        }
       })
       .catch((error) => {
         console.error(error);
