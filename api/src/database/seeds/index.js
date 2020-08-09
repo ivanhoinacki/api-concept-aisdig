@@ -10,7 +10,7 @@ const createMovies = async () => {
   try {
     let movieList = await getMovies();
     if (movieList.results.length <= 0) console.log('movies not found.');
-
+    console.log(`Movies found => ${movieList.results.length}`);
     for (const key in movieList.results) {
       if (movieList.results.hasOwnProperty(key)) {
         let e = movieList.results[key];
@@ -18,14 +18,16 @@ const createMovies = async () => {
         e.createdAt = new Date();
         e.updatedAt = new Date();
 
-        const movie = await Movies.findOne({ where: { id_movie: e.id } });
+        let movie = await Movies.findOne({ where: { id_movie: e.id } });
         if (!movie) {
           movie = await Movies.create(e);
+          console.log(`Movie create => ${movie.getDataValue('original_title')}`);
         }
 
         const trasnlateList = await getTranslate(
           movie.getDataValue('id_movie')
         );
+        console.log(`Translations found => ${trasnlateList.translations.length} for movie ${movie.getDataValue('original_title')}`);
         await mountTranslate(trasnlateList, movie);
       }
     }
@@ -40,7 +42,6 @@ const mountTranslate = (trasnlateList, movie) => {
       let translateMovie;
       for (const key in trasnlateList.translations) {
         if (trasnlateList.translations.hasOwnProperty(key)) {
-
           let e = trasnlateList.translations[key];
           e.movieId = movie.getDataValue('id');
           e.createdAt = new Date();
@@ -55,6 +56,7 @@ const mountTranslate = (trasnlateList, movie) => {
 
           if (!translateMovie) {
             translateMovie = await TranslateMovie.create(e);
+            console.log(`Subtitles language create => ${translateMovie.getDataValue('english_name')} for movie ${movie.getDataValue('original_title')}`);
           }
         }
       }

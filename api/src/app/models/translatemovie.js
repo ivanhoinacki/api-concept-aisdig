@@ -18,15 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       iso_639_1: DataTypes.STRING,
       name: DataTypes.STRING,
       english_name: DataTypes.STRING,
-      data: {
-        type: DataTypes.TEXT,
-        get: function () {
-          return JSON.parse(this.getDataValue('data'));
-        },
-        set: function (value) {
-          this.setDataValue('data', JSON.stringify(value));
-        },
-      },
+      data: DataTypes.JSONB,
     },
     {
       sequelize,

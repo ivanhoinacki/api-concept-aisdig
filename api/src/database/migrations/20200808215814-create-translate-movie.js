@@ -13,7 +13,7 @@ module.exports = {
       iso_639_1: Sequelize.STRING,
       name: Sequelize.STRING,
       english_name: Sequelize.STRING,
-      data: Sequelize.TEXT,
+      data: Sequelize.JSONB,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

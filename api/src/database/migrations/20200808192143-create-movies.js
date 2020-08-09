@@ -12,7 +12,7 @@ module.exports = {
       vote_count: Sequelize.INTEGER,
       video: Sequelize.BOOLEAN,
       poster_path: Sequelize.STRING,
-      id_movie: Sequelize.STRING,
+      id_movie: Sequelize.INTEGER,
       adult: Sequelize.BOOLEAN,
       backdrop_path: Sequelize.STRING,
       original_language: Sequelize.STRING,
