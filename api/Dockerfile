@@ -21,4 +21,8 @@ COPY . /usr/src/app
 
 EXPOSE 9000
 
-CMD ["npm", "start"]
+## THE LIFE SAVER
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
+
+CMD /wait && npm start

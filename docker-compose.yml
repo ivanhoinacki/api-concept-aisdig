@@ -32,6 +32,7 @@ services:
     ports:
       - '${PORT}:${PORT}'
     environment:
+      WAIT_HOSTS: postgres_db:${PG_PORT}
       API_KEY: ${API_KEY}
       PORT: ${PORT}
       PG_USER: ${PG_USER}
@@ -39,7 +40,6 @@ services:
       PG_DATABASE: ${PG_DATABASE}
       PG_HOST: postgres_db
       PG_PORT: ${PG_PORT}
-    command: bash -c 'while wait-for-postgres.sh; do sleep 1; done; npm start'    
     networks:
       - production-network
 
