@@ -68,7 +68,6 @@ const mountTranslate = (trasnlateList, movie) => {
 };
 
 const getMovies = () => {
-  console.log(process.env)
   return new Promise((resolve, reject) => {
     var options = {
       method: 'GET',
