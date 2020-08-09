@@ -18,7 +18,9 @@ module.exports = {
     database: process.env.PG_DATABASE,
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
-    dialect: 'postgres',
+    logging: true,
+    dialect: 'sqlite',
+    storage: './__tests__/database.sqlite',
     logging: false,
     define: {
       timestamps: true,
